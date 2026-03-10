@@ -259,8 +259,16 @@ local Settings = {
 -- ============================================================
 local RFPurchaseWeatherEvent = nil
 pcall(function()
-    RFPurchaseWeatherEvent = ReplicatedStorage.Packages
-        ._Index["sleitnick_net@0.2.0"].net["RF/PurchaseWeatherEvent"]
+    for _, index in pairs(ReplicatedStorage.Packages._Index:GetChildren()) do
+        local net = index:FindFirstChild("net")
+        if net then
+            local ev = net:FindFirstChild("RF/PurchaseWeatherEvent")
+            if ev then
+                RFPurchaseWeatherEvent = ev
+                break
+            end
+        end
+    end
 end)
 
 local weatherKeyMap = {
